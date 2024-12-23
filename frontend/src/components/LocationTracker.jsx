@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
+// Default marker icon setup
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
@@ -10,10 +11,21 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
 });
 
+// Custom red icon for user location
+const redIcon = new L.Icon({
+  iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+  iconSize: [25, 41], // Size of the icon
+  iconAnchor: [12, 41], // Point of the icon which will correspond to marker's location
+  popupAnchor: [1, -34], // Point where the popup opens relative to the iconAnchor
+  shadowSize: [41, 41], // Size of the shadow
+});
+
 const LocationTracker = () => {
   const [location, setLocation] = useState(null);
   const [radius, setRadius] = useState(5000); // Default radius: 5 km
   const [hospitals, setHospitals] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [isLocationError, setIsLocationError] = useState(false);
 
   const API_URL = "http://localhost:3000/api/nearby-hospitals";
@@ -23,7 +35,14 @@ const LocationTracker = () => {
       const response = await fetch(`${API_URL}?lat=${lat}&lng=${lng}&radius=${radius}`);
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
       const data = await response.json();
-      setHospitals(data);
+      console.log("Fetched Hospital Data:", data); // Log the full data
+      // Add random ratings and reviews to each hospital
+      const enhancedHospitals = data.map((hospital) => ({
+        ...hospital,
+        rating: (Math.random() * 4 + 1).toFixed(1), // Rating between 1.0 to 5.0
+        reviews: Math.floor(Math.random() * 500 + 1), // Reviews between 1 and 500
+      }));
+      setHospitals(enhancedHospitals);
     } catch (error) {
       console.error("Error fetching hospitals:", error.message);
       alert("Unable to fetch nearby hospitals. Please try again later.");
@@ -47,21 +66,9 @@ const LocationTracker = () => {
     }
   };
 
-  const handleLocationInput = () => {
-    const lat = parseFloat(prompt("Enter Latitude:"));
-    const lng = parseFloat(prompt("Enter Longitude:"));
-    if (lat && lng) {
-      setLocation({ lat, lng });
-      fetchNearbyHospitals(lat, lng, radius);
-      setIsLocationError(false);
-    } else {
-      alert("Invalid coordinates. Please try again.");
-    }
-  };
-
-  const handleManualLatLngUpdate = () => {
-    const lat = parseFloat(prompt("Update Latitude:", location?.lat || ""));
-    const lng = parseFloat(prompt("Update Longitude:", location?.lng || ""));
+  const updateLocationManually = () => {
+    const lat = parseFloat(prompt("Enter Latitude:", location?.lat || ""));
+    const lng = parseFloat(prompt("Enter Longitude:", location?.lng || ""));
     if (lat && lng) {
       setLocation({ lat, lng });
       fetchNearbyHospitals(lat, lng, radius);
@@ -74,11 +81,15 @@ const LocationTracker = () => {
     getUserLocation();
   }, []);
 
+  const filteredHospitals = hospitals.filter((hospital) =>
+    hospital.tags?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (isLocationError) {
     return (
       <div>
         <h2>Could not fetch your location. Please enter it manually:</h2>
-        <button onClick={handleLocationInput}>Enter Location Manually</button>
+        <button onClick={updateLocationManually}>Enter Location Manually</button>
       </div>
     );
   }
@@ -100,45 +111,58 @@ const LocationTracker = () => {
               Update Search
             </button>
           </label>
-          <button onClick={handleManualLatLngUpdate} style={{ marginLeft: "10px" }}>
+          <button onClick={updateLocationManually} style={{ marginLeft: "10px" }}>
             Update Latitude/Longitude
           </button>
+          <br />
+          <label>
+            Search Hospitals:
+            <input
+              type="text"
+              placeholder="Enter hospital name"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ marginLeft: "10px", marginTop: "10px" }}
+            />
+          </label>
           <MapContainer
             center={[location.lat, location.lng]}
             zoom={14}
             style={{ height: "500px", width: "100%" }}
           >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={[location.lat, location.lng]}>
+            <Marker position={[location.lat, location.lng]} icon={redIcon}>
               <Popup>Your Location</Popup>
             </Marker>
-            {hospitals.map((hospital, index) => (
+            {filteredHospitals.map((hospital, index) => (
               <Marker
                 key={index}
-                position={[
-                  hospital.lat || hospital.center?.lat,
-                  hospital.lon || hospital.center?.lon,
-                ]}
+                position={[hospital.lat || hospital.center?.lat, hospital.lon || hospital.center?.lon]}
               >
                 <Popup>
                   <h3>{hospital.tags?.name || "Unnamed Hospital"}</h3>
-                  <p>{hospital.tags?.amenity || "Hospital"}</p>
+                  <p>Address: {hospital.tags?.["addr:full"] || "Not Available"}</p>
+                  <p>Postal Code: {hospital.tags?.["addr:postcode"] || "Not Available"}</p>
+                  <p>Rating: ⭐ {hospital.rating} ({hospital.reviews} reviews)</p>
                 </Popup>
               </Marker>
             ))}
           </MapContainer>
           <h3>Nearby Hospitals:</h3>
-          {hospitals.length > 0 ? (
+          {filteredHospitals.length > 0 ? (
             <ul>
-              {hospitals.map((hospital, index) => (
+              {filteredHospitals.map((hospital, index) => (
                 <li key={index}>
                   <strong>{hospital.tags?.name || "Unnamed Hospital"}</strong>
-                  <p>Type: {hospital.tags?.amenity || "Unknown"}</p>
+                  <p>Address: {hospital.tags?.["addr:full"] || "Not Available"}</p>
+                  <p>Rating: ⭐ {hospital.rating} ({hospital.reviews} reviews)</p>
+                  <p>Latitude: {hospital.lat}, Longitude: {hospital.lon}</p>
+                  <p>Postal Code: {hospital.tags?.["addr:postcode"] || "Not Available"}</p>
                 </li>
               ))}
             </ul>
           ) : (
-            <p>No hospitals found in this radius.</p>
+            <p>No hospitals found matching the search query.</p>
           )}
         </>
       ) : (
