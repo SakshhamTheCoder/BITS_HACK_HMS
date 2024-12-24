@@ -1,12 +1,11 @@
 import React from 'react';
-import LocationTracker from './components/LocationTracker';
+import Home from './components/Home';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Nearby Hospital Locator</h1>
-      <LocationTracker />
-    </div>
+    <>
+      <Home />
+    </>
   );
 }
 
