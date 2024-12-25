@@ -8,6 +8,11 @@ exports.registerUser = async (req, res) => {
   }
 
   try {
+    // const existingUser = await firestore.collection("users").where("email", "==", email).get();
+    // if (!existingUser.empty) {
+    //   return res.status(400).json({ error: "Email is already in use." });
+    // }
+
     const userRecord = await auth.createUser({ email, password, displayName });
     const userData = {
       uid: userRecord.uid,
@@ -17,6 +22,7 @@ exports.registerUser = async (req, res) => {
     };
 
     await firestore.collection("users").doc(userRecord.uid).set(userData);
+
     res.status(201).json({ message: "User registered successfully", user: userData });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -42,3 +48,4 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ error: "Internal server error during login." });
   }
 };
+

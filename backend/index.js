@@ -3,6 +3,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const hospitalRoutes = require("./routes/hospitalRoutes");
 const errorMiddleware = require("./middlewares/errorMiddleware");
+const appointmentRoutes = require("./routes/appointmentRoutes");
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api", hospitalRoutes);
+app.use("/api/appointments", appointmentRoutes);
 
 app.use(errorMiddleware);
 
