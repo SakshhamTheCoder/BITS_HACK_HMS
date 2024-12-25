@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Navbar({ isAuthenticated, setIsAuthenticated }) {
+function Navbar({ isAuthenticated, setIsAuthenticated, onLoginClick }) {
   const handleLogout = () => {
     console.log("Logging out...");
     setIsAuthenticated(false);
@@ -11,14 +11,14 @@ function Navbar({ isAuthenticated, setIsAuthenticated }) {
   };
 
   return (
-    <nav className="bg-teal-500 text-white shadow-md fixed w-full z-10 top-0">
+    <nav className="bg-teal-700 text-white shadow-md fixed w-full z-10 top-0">
       <div className="container mx-auto px-4 flex justify-between items-center py-4">
         <div className="text-2xl font-semibold">Hospital Management</div>
         <ul className="hidden md:flex space-x-6">
-          <li className="hover:text-teal-100"><Link to="#dashboard">Dashboard</Link></li>
-          <li className="hover:text-teal-100"><Link to="#services">Services</Link></li>
           <li className="hover:text-teal-100"><Link to="#about">About Us</Link></li>
-          <li className="hover:text-teal-100"><Link to="#contact">Contact</Link></li>
+          <li className="hover:text-teal-100 cursor-pointer" onClick={onLoginClick}>
+            Login
+          </li>
           {isAuthenticated ? (
             <li
               onClick={handleLogout}
@@ -34,3 +34,4 @@ function Navbar({ isAuthenticated, setIsAuthenticated }) {
 }
 
 export default Navbar;
+
