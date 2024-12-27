@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import Navbar from "../pages/Navbar";  // Import Navbar from pages
-import Footer from "../pages/Footer";  // Import Footer from pages
 
 // Default marker icon setup
 delete L.Icon.Default.prototype._getIconUrl;
@@ -17,15 +15,15 @@ L.Icon.Default.mergeOptions({
 const redIcon = new L.Icon({
   iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
   shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
-  iconSize: [25, 41], 
-  iconAnchor: [12, 41], 
-  popupAnchor: [1, -34], 
-  shadowSize: [41, 41], 
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
 });
 
-const LocationTracker = ({ isAuthenticated }) => {
+const LocationTracker = () => {
   const [location, setLocation] = useState(null);
-  const [radius, setRadius] = useState(5000); 
+  const [radius, setRadius] = useState(5000);
   const [hospitals, setHospitals] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLocationError, setIsLocationError] = useState(false);
@@ -109,9 +107,6 @@ const LocationTracker = ({ isAuthenticated }) => {
 
   return (
     <div className="bg-teal-50 min-h-screen">
-      {/* Navbar */}
-      <Navbar isAuthenticated={isAuthenticated} />
-
       {/* Hero Section */}
       <section className="relative pt-24 pb-16 bg-teal-50 text-center">
         <div className="container mx-auto">
@@ -186,9 +181,6 @@ const LocationTracker = ({ isAuthenticated }) => {
           )}
         </div>
       </section>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 };
