@@ -40,7 +40,7 @@ function Modal({ loginOrRegister, onClose }) {
   };
 
   return (
-    <div className="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="z-50 sticky bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold mb-4">
           {loginOrRegister ? "Login" : "Register"}

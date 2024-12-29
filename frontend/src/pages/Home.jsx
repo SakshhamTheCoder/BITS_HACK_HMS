@@ -48,9 +48,11 @@ function FeaturesSection() {
             <div className="bg-teal-50 shadow-md rounded-lg p-6 text-center">
               <h3 className="text-lg font-semibold text-teal-800 mb-3">Appointment Scheduling</h3>
               <p className="text-teal-600 mb-4">Easily schedule, reschedule, or cancel appointments.</p>
-              <button className="px-4 py-2 bg-teal-800 text-white rounded-md hover:bg-teal-700 transition duration-300">
-                Explore
-              </button>
+              <Link to="/appointment">
+                <button className="px-4 py-2 bg-teal-800 text-white rounded-md hover:bg-teal-700 transition duration-300">
+                  Explore
+                </button>
+              </Link>
             </div>
           </div>
         </div>

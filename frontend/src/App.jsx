@@ -3,13 +3,14 @@ import { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import LocationTracker from './components/LocationTracker';
 import Appointment from './pages/Appointment';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './helpers/firebase';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { Navigate } from 'react-router-dom';
+import Schedule from './pages/Schedule';
 
 function App() {
-  const auth = getAuth();
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -39,6 +40,7 @@ function App() {
           path="/appointment"
           element={loggedIn ? <Appointment /> : <Navigate to="/" />}
         />
+        <Route path="/appointment/schedule" element={loggedIn ? <Schedule /> : <Navigate to="/" />} />
       </Routes>
       <Footer />
     </Router>

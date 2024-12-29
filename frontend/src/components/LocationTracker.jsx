@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { db, auth } from "../helpers/firebase";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
+import API_URL from "../helpers/Config";
 
 // Default marker icon setup
 delete L.Icon.Default.prototype._getIconUrl;
@@ -28,11 +31,12 @@ const LocationTracker = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isLocationError, setIsLocationError] = useState(false);
 
-  const API_URL = "http://localhost:3000/api/nearby-hospitals";
+  const LOC_API_URL = `${API_URL}/nearby-hospitals`;
+  const userId = auth.currentUser?.uid;
 
   const fetchNearbyHospitals = async (lat, lng, radius) => {
     try {
-      const response = await fetch(`${API_URL}?lat=${lat}&lng=${lng}&radius=${radius}`);
+      const response = await fetch(`${LOC_API_URL}?lat=${lat}&lng=${lng}&radius=${radius}`);
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
       const data = await response.json();
       const enhancedHospitals = data.map((hospital) => ({
@@ -41,6 +45,22 @@ const LocationTracker = () => {
         reviews: Math.floor(Math.random() * 500 + 1),
       }));
       setHospitals(enhancedHospitals);
+
+      // Save to Firebase if the conditions are met
+      const lastSaved = JSON.parse(localStorage.getItem("lastSaved")) || {};
+      const currentTime = new Date().getTime();
+      const timeElapsed = currentTime - lastSaved.timestamp > 30 * 60 * 1000; // 30 minutes
+
+      if (userId && (timeElapsed || lastSaved.radius !== radius)) {
+        const userRef = doc(db, "data", userId); // Document path: data > userId
+        await setDoc(userRef, {
+          hospitals: enhancedHospitals,
+          location: { lat, lng },
+          radius,
+          timestamp: Timestamp.fromMillis(currentTime),
+        });
+        localStorage.setItem("lastSaved", JSON.stringify({ timestamp: currentTime, radius }));
+      }
     } catch (error) {
       console.error("Error fetching hospitals:", error.message);
       alert("Unable to fetch nearby hospitals. Please try again later.");
