@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../helpers/firebase";
 import API_URL from "../helpers/Config";
+import { useNavigate } from "react-router-dom";
 
 const Schedule = () => {
     const [hospitalId, setHospitalId] = useState("");
@@ -11,6 +12,7 @@ const Schedule = () => {
     const [doctors, setDoctors] = useState([]); // State for holding doctors for the selected hospital
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const userId = auth.currentUser?.uid;
 
@@ -19,6 +21,11 @@ const Schedule = () => {
         const fetchHospitals = async () => {
             try {
                 const response = await fetch(`${API_URL}/saved-hospitals/${userId}`);
+                if (response.status === 404) {
+                    alert("No saved hospitals found. Please locate hospitals first by exploring nearby hospitals.");
+                    navigate("/nearby");
+                    return;
+                }
                 const data = await response.json();
                 setHospitals(data); // Assume response contains an array of hospitals
             } catch (err) {

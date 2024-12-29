@@ -6,7 +6,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../helpers/firebase";
+import { auth, db } from "../helpers/firebase";
 
 function Modal({ loginOrRegister, onClose }) {
   const [email, setEmail] = useState("");
@@ -28,8 +28,11 @@ function Modal({ loginOrRegister, onClose }) {
           password
         );
         // Update the username
-        await updateProfile(userCredential.user, {
+        db.collection("users").doc(userCredential.user.uid).set({
+          email: email,
           displayName: username,
+          uid: userCredential.user.uid,
+          createdAt: new Date(),
         });
         alert("Registered successfully!");
       }
