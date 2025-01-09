@@ -143,7 +143,7 @@ const AboutUs = () => {
             </h2>
             <p className="text-sm text-teal-400">ML Developer</p>
             <p className="mt-4 text-gray-700 text-base">
-              
+              worked on developing various ML models for the project. Passionate about AI and ML.
             </p>
             <motion.div
               className="flex space-x-4 mt-2"
@@ -152,14 +152,14 @@ const AboutUs = () => {
               transition={{ delay: 1.2, duration: 1 }}
             >
               <a
-                href="#"
+                href="https://www.linkedin.com/in/navnoorbawa/"
                 className="text-teal-600 hover:text-teal-400 transition-colors"
                 whileHover={{ scale: 1.2 }}
               >
                 <FaLinkedin size={28} />
               </a>
               <a
-                href="#"
+                href="https://github.com/NavnoorBawa"
                 className="text-teal-600 hover:text-teal-400 transition-colors"
                 whileHover={{ scale: 1.2 }}
               >
@@ -195,8 +195,8 @@ const AboutUs = () => {
             transition={{ delay: 0.5, duration: 1 }}
           >
             <img
-              src="/path/to/member3.jpg" // Make sure this is the correct path to your image
-              alt="Member 3"
+              src="/dhruv.jpg" // Make sure this is the correct path to your image
+              alt="dhruv"
               className="w-43 h-42 object-cover rounded-lg shadow-lg"
             />
           </motion.div>
@@ -212,8 +212,8 @@ const AboutUs = () => {
               Dhruv Goyal
             </h2>
             <p className="text-sm text-teal-400">backend developer</p>
-            <p className="mt-4 text-gray-700 text-base">
-            </p>
+            <p className="mt-4 text-gray-700 text-base"> A backend developer with a passion for building scalable and efficient systems. developed backend for this project. </p>
+            
             <motion.div
               className="flex space-x-4 mt-2"
               initial={{ opacity: 0 }}
@@ -264,8 +264,8 @@ const AboutUs = () => {
             transition={{ delay: 0.5, duration: 1 }}
           >
             <img
-              src="/path/to/member4.jpg" // Make sure this is the correct path to your image
-              alt="Member 4"
+              src="/sakshham.jpg" // Make sure this is the correct path to your image
+              alt="sakshham"
               className="w-43 h-42 object-cover rounded-lg shadow-lg"
             />
           </motion.div>
@@ -277,11 +277,11 @@ const AboutUs = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 1 }}
           >
-            <h2 className="text-2xl font-semibold text-teal-600 hover:text-teal-400 transition-colors duration-300">
+            <h2 className="text-2xl font-bold text-teal-600 hover:text-teal-400 transition-colors duration-300">
               Sakshham Bhagat
             </h2>
-            <p className="text-sm text-teal-400"></p>
-            <p className="mt-4 text-gray-700 text-lg">
+            <p className="text-sm text-teal-400"> backend developer</p>
+            <p className="mt-4 text-gray-700 text-base"> A backend developer with a passion for building scalable and efficient systems. developed backend for this project.
             </p>
             <motion.div
               className="flex space-x-4 mt-2"
@@ -312,8 +312,3 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
-
-
-
-
-
