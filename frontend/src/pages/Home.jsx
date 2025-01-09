@@ -19,7 +19,7 @@ function HeroSection() {
   };
 
   return (
-    <section className="bg-gradient-to-b from-black via-gray-900 to-gray-800 py-16 text-center relative pt-24">
+    <section className="bg-gradient-to-b from-black via-gray-800 to-gray-900 py-16 text-center relative pt-24">
       <div className="container mx-auto">
         <Slider {...sliderSettings}>
           <div>
@@ -96,7 +96,7 @@ function FeaturesSection() {
     <section
       id="dashboard"
       ref={ref}
-      className="py-16 bg-gradient-to-b from-gray-800 via-black to-gray-900"
+      className="py-16 bg-gradient-to-b from-gray-800 via-gray-950 to-gray-900"
     >
       <div className="container mx-auto">
         {/* Creative Section Heading */}
@@ -106,16 +106,32 @@ function FeaturesSection() {
           animate={controls}
           className="text-center mb-12"
         >
-          <motion.h2
-            className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-teal-600 to-gray-300 inline-block tracking-wide"
-            whileHover={{
-              scale: 1.1,
-              rotate: 5,
-              textShadow: "0px 0px 12px rgba(0, 150, 130, 0.8)",
-            }}
-          >
-            Why Choose Us?
-          </motion.h2>
+          <motion.h1
+  className="text-5xl justify-center text-center md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-teal-600 to-gray-300 inline-block tracking-wide"
+  initial={{ rotate: 0, scale: 1, textShadow: "none" }} // Initial state
+  whileHover={{
+    scale: 1.1,
+    rotate: 5,
+    textShadow: "0px 0px 12px rgba(0, 150, 130, 0.8)", // Effects while hovering
+    transition: { 
+      duration: 1, // Duration for the hover effect
+      type: "spring", // Smooth spring transition
+    }
+  }}
+  animate={{
+    rotate: 0, // Reset rotation after hover
+    scale: 1, // Reset scale after hover
+    textShadow: "none", // Reset text shadow after hover
+    transition: {
+      duration: 1, // Duration for the reset effect
+      delay: 1, // Delay the reset effect to start after 1 second
+      type: "spring", // Smooth spring transition
+    }
+  }}
+>
+  Why Choose Us?
+</motion.h1>
+
         </motion.div>
 
         {/* Section Content */}

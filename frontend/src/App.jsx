@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import { Navigate } from 'react-router-dom';
 import Schedule from './pages/Schedule';
+import AboutUs from './components/AboutUs';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -41,6 +42,7 @@ function App() {
           element={loggedIn ? <Appointment /> : <Navigate to="/" />}
         />
         <Route path="/appointment/schedule" element={loggedIn ? <Schedule /> : <Navigate to="/" />} />
+        <Route path="/AboutUs" element={<AboutUs />} />
       </Routes>
       <Footer />
     </Router>
