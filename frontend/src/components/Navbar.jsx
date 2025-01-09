@@ -39,14 +39,14 @@ function Modal({ loginOrRegister, onClose }) {
   };
 
   return (
-    <div className="z-50 fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center">
-      <div className="bg-gradient-to-br from-white to-gray-100 p-8 rounded-2xl shadow-2xl w-96 relative">
-        <h2 className="text-3xl font-extrabold text-gray-800 mb-8 text-center tracking-wide">
+    <div className="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-96">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
           {loginOrRegister ? "Login" : "Register"}
         </h2>
         <form onSubmit={handleSubmit}>
           {!loginOrRegister && (
-            <div className="mb-6">
+            <div className="mb-4">
               <label
                 htmlFor="username"
                 className="block text-sm font-semibold text-gray-600 mb-2"
@@ -58,12 +58,12 @@ function Modal({ loginOrRegister, onClose }) {
                 id="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-300 ease-in-out transform hover:scale-105"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
                 required={!loginOrRegister}
               />
             </div>
           )}
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="email"
               className="block text-sm font-semibold text-gray-600 mb-2"
@@ -75,11 +75,11 @@ function Modal({ loginOrRegister, onClose }) {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-300 ease-in-out transform hover:scale-105"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
               required
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="password"
               className="block text-sm font-semibold text-gray-600 mb-2"
@@ -91,20 +91,20 @@ function Modal({ loginOrRegister, onClose }) {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-300 ease-in-out transform hover:scale-105"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-teal-500 to-teal-700 text-white font-medium rounded-lg px-4 py-3 hover:shadow-xl transform hover:scale-105 transition duration-300"
+            className="w-full bg-gradient-to-r from-teal-500 to-teal-700 text-white font-medium rounded-lg px-4 py-2 hover:shadow-lg transform hover:scale-105 transition duration-300"
           >
             {loginOrRegister ? "Login" : "Register"}
           </button>
         </form>
         <button
           onClick={onClose}
-          className="mt-6 text-teal-700 hover:underline w-full text-center font-semibold"
+          className="mt-4 text-teal-700 hover:underline w-full text-center"
         >
           Close
         </button>
@@ -138,7 +138,7 @@ function Navbar() {
           </div>
           <ul className="hidden md:flex space-x-6 items-center">
             <li className="cursor-pointer hover:text-yellow-200 transition duration-300 tracking-wide">
-              <Link to="#about">About Us</Link>
+              <Link to="/AboutUs">About Us</Link>
             </li>
             {auth.currentUser !== null ? (
               <li
@@ -179,9 +179,8 @@ function Navbar() {
         />
       )}
     </>
-  );
+  );  
 }
 
 export default Navbar;
-
 
