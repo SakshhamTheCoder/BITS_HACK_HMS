@@ -96,7 +96,7 @@ function FeaturesSection() {
     <section
       id="dashboard"
       ref={ref}
-      className="py-16 bg-gradient-to-b from-gray-800 via-black to-gray-900"
+      className="py-16 bg-gradient-to-b from-gray-800 via-gray-950 to-gray-900"
     >
       <div className="container mx-auto">
         {/* Creative Section Heading */}
