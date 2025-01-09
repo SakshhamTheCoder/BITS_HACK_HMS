@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { motion, useAnimation } from "framer-motion";
+import { FaMapMarkedAlt, FaCalendarCheck } from "react-icons/fa";
+import { useInView } from "react-intersection-observer";
 
 function HeroSection() {
   const sliderSettings = {
@@ -16,12 +19,30 @@ function HeroSection() {
   };
 
   return (
-    <section className="bg-teal-50 py-16 text-center relative pt-24">
+    <section className="bg-gradient-to-b from-black via-gray-900 to-gray-800 py-16 text-center relative pt-24">
       <div className="container mx-auto">
         <Slider {...sliderSettings}>
-          <div><img src="image1.jpg" alt="" className="w-full h-[450px] object-cover mx-auto rounded-lg shadow-lg" /></div>
-          <div><img src="image2.jpg" alt="" className="w-full h-[450px] object-cover mx-auto rounded-lg shadow-lg" /></div>
-          <div><img src="image3.jpg" alt="" className="w-full h-[450px] object-cover mx-auto rounded-lg shadow-lg" /></div>
+          <div>
+            <img
+              src="image1.jpg"
+              alt=""
+              className="w-full h-[450px] object-cover mx-auto rounded-lg shadow-lg"
+            />
+          </div>
+          <div>
+            <img
+              src="image2.jpg"
+              alt=""
+              className="w-full h-[450px] object-cover mx-auto rounded-lg shadow-lg"
+            />
+          </div>
+          <div>
+            <img
+              src="image3.jpg"
+              alt=""
+              className="w-full h-[450px] object-cover mx-auto rounded-lg shadow-lg"
+            />
+          </div>
         </Slider>
       </div>
     </section>
@@ -29,33 +50,150 @@ function HeroSection() {
 }
 
 function FeaturesSection() {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({ threshold: 0.3 });
+
+  React.useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    } else {
+      controls.start("hidden");
+    }
+  }, [controls, inView]);
+
+  // Animation Variants
+  const containerVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { delayChildren: 0.3, staggerChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
+
+  const headingVariants = {
+    hidden: { opacity: 0, y: -50, rotate: -10, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      rotate: 0,
+      scale: 1,
+      transition: {
+        duration: 1,
+        ease: "easeOut",
+        type: "spring",
+        stiffness: 200,
+      },
+    },
+  };
+
   return (
-    <section id="dashboard" className="py-16 bg-white">
+    <section
+      id="dashboard"
+      ref={ref}
+      className="py-16 bg-gradient-to-b from-gray-800 via-black to-gray-900"
+    >
       <div className="container mx-auto">
-        <h2 className="text-8xl font-bold font-sans text-center text-teal-800 mb-8">Why Choose Us?</h2>
-        <div className="px-20 py-10 mb-0">
-          <p className='px-10 py-10'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius sint explicabo quae dolore fugiat reprehenderit veniam vel fugit et, quia, ipsa dignissimos distinctio quo quod qui magnam maiores eligendi aliquam?</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-teal-50 shadow-md rounded-lg p-6 text-center">
-              <h3 className="text-lg font-semibold text-teal-800 mb-3">Nearby Hospital Locator</h3>
-              <p className="text-teal-600 mb-4">Tracks and displays Nearby Hospital.</p>
+        {/* Creative Section Heading */}
+        <motion.div
+          variants={headingVariants}
+          initial="hidden"
+          animate={controls}
+          className="text-center mb-12"
+        >
+          <motion.h2
+            className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-teal-600 to-gray-300 inline-block tracking-wide"
+            whileHover={{
+              scale: 1.1,
+              rotate: 5,
+              textShadow: "0px 0px 12px rgba(0, 150, 130, 0.8)",
+            }}
+          >
+            Why Choose Us?
+          </motion.h2>
+        </motion.div>
+
+        {/* Section Content */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={controls}
+          className="px-6 md:px-20"
+        >
+          <motion.p
+            variants={itemVariants}
+            className="text-lg text-gray-400 text-center mb-12 leading-relaxed"
+          >
+            Our platform provides cutting-edge solutions for your healthcare
+            needs, ensuring convenience and efficiency at every step.
+          </motion.p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {/* Feature 1 */}
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+              className="bg-gray-800 shadow-md rounded-lg p-8 hover:shadow-lg transition duration-300 flex flex-col items-center text-center"
+            >
+              <div className="flex items-center justify-center bg-gray-700 rounded-full w-16 h-16 mb-6">
+                <FaMapMarkedAlt className="text-teal-500 text-3xl" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-200 mb-4">
+                Nearby Hospital Locator
+              </h3>
+              <p className="text-gray-400 mb-6">
+                Tracks and displays nearby hospitals for emergencies or routine
+                care.
+              </p>
               <Link to="/nearby">
-                <button className="px-4 py-2 bg-teal-800 text-white rounded-md hover:bg-teal-700 transition duration-300">
+                <motion.button
+                  whileHover={{
+                    scale: 1.1,
+                    backgroundColor: "rgb(15, 130, 115)",
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  className="px-6 py-3 bg-teal-600 text-white font-medium rounded-full hover:bg-teal-700 transition duration-300"
+                >
                   Explore
-                </button>
+                </motion.button>
               </Link>
-            </div>
-            <div className="bg-teal-50 shadow-md rounded-lg p-6 text-center">
-              <h3 className="text-lg font-semibold text-teal-800 mb-3">Appointment Scheduling</h3>
-              <p className="text-teal-600 mb-4">Easily schedule, reschedule, or cancel appointments.</p>
+            </motion.div>
+
+            {/* Feature 2 */}
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+              className="bg-gray-800 shadow-md rounded-lg p-8 hover:shadow-lg transition duration-300 flex flex-col items-center text-center"
+            >
+              <div className="flex items-center justify-center bg-gray-700 rounded-full w-16 h-16 mb-6">
+                <FaCalendarCheck className="text-teal-500 text-3xl" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-200 mb-4">
+                Appointment Scheduling
+              </h3>
+              <p className="text-gray-400 mb-6">
+                Easily schedule, reschedule, or cancel appointments with a few
+                clicks.
+              </p>
               <Link to="/appointment">
-                <button className="px-4 py-2 bg-teal-800 text-white rounded-md hover:bg-teal-700 transition duration-300">
+                <motion.button
+                  whileHover={{
+                    scale: 1.1,
+                    backgroundColor: "rgb(15, 130, 115)",
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  className="px-6 py-3 bg-teal-600 text-white font-medium rounded-full hover:bg-teal-700 transition duration-300"
+                >
                   Explore
-                </button>
+                </motion.button>
               </Link>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -66,7 +204,6 @@ function Home() {
     <>
       <HeroSection />
       <FeaturesSection />
-
     </>
   );
 }
