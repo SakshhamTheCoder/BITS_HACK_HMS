@@ -4,7 +4,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile,
 } from "firebase/auth";
 import { auth, db } from "../helpers/firebase";
 
@@ -17,17 +16,14 @@ function Modal({ loginOrRegister, onClose }) {
     e.preventDefault();
     try {
       if (loginOrRegister) {
-        // Login
         await signInWithEmailAndPassword(auth, email, password);
         alert("Logged in successfully!");
       } else {
-        // Register
         const userCredential = await createUserWithEmailAndPassword(
           auth,
           email,
           password
         );
-        // Update the username
         db.collection("users").doc(userCredential.user.uid).set({
           email: email,
           displayName: username,
@@ -43,9 +39,9 @@ function Modal({ loginOrRegister, onClose }) {
   };
 
   return (
-    <div className="z-50 sticky bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold mb-4">
+    <div className="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-96">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
           {loginOrRegister ? "Login" : "Register"}
         </h2>
         <form onSubmit={handleSubmit}>
@@ -53,7 +49,7 @@ function Modal({ loginOrRegister, onClose }) {
             <div className="mb-4">
               <label
                 htmlFor="username"
-                className="block text-sm font-semibold mb-2"
+                className="block text-sm font-semibold text-gray-600 mb-2"
               >
                 Username
               </label>
@@ -62,13 +58,16 @@ function Modal({ loginOrRegister, onClose }) {
                 id="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                required={!loginOrRegister} // Required only for register
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                required={!loginOrRegister}
               />
             </div>
           )}
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-semibold mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-semibold text-gray-600 mb-2"
+            >
               Email
             </label>
             <input
@@ -76,14 +75,14 @@ function Modal({ loginOrRegister, onClose }) {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
               required
             />
           </div>
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-sm font-semibold mb-2"
+              className="block text-sm font-semibold text-gray-600 mb-2"
             >
               Password
             </label>
@@ -92,20 +91,20 @@ function Modal({ loginOrRegister, onClose }) {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-teal-700 text-white rounded-lg px-4 py-2 hover:bg-teal-600 transition duration-300"
+            className="w-full bg-gradient-to-r from-teal-500 to-teal-700 text-white font-medium rounded-lg px-4 py-2 hover:shadow-lg transform hover:scale-105 transition duration-300"
           >
             {loginOrRegister ? "Login" : "Register"}
           </button>
         </form>
         <button
           onClick={onClose}
-          className="mt-4 text-teal-700 hover:underline"
+          className="mt-4 text-teal-700 hover:underline w-full text-center"
         >
           Close
         </button>
@@ -130,24 +129,28 @@ function Navbar() {
 
   return (
     <>
-      <nav className="bg-teal-700 text-white shadow-md fixed w-full z-10 top-0">
-        <div className="container mx-auto px-4 flex justify-between items-center py-4">
-          <div className="text-2xl font-semibold">Hospital Management</div>
-          <ul className="hidden md:flex space-x-6">
-            <li className="hover:text-teal-100">
+      <nav className="bg-gradient-to-r from-teal-700 to-teal-800 text-white fixed w-full shadow-lg z-10 top-0">
+        <div className="container mx-auto px-6 flex justify-between items-center py-4">
+          <div className="text-2xl font-bold tracking-wide hover:scale-110 transition-transform duration-300">
+            <Link to="/" className="hover:text-yellow-100">
+              Arogyam
+            </Link>
+          </div>
+          <ul className="hidden md:flex space-x-6 items-center">
+            <li className="cursor-pointer hover:text-yellow-200 transition duration-300 tracking-wide">
               <Link to="#about">About Us</Link>
             </li>
             {auth.currentUser !== null ? (
               <li
                 onClick={handleLogout}
-                className="hover:text-teal-100 cursor-pointer"
+                className="cursor-pointer hover:text-yellow-200 transition duration-300 tracking-wide"
               >
                 Logout
               </li>
             ) : (
               <>
                 <li
-                  className="hover:text-teal-100 cursor-pointer"
+                  className="cursor-pointer hover:text-yellow-200 transition duration-300 tracking-wide"
                   onClick={() => {
                     setIsLogin(true);
                     setIsModalOpen(true);
@@ -156,7 +159,7 @@ function Navbar() {
                   Login
                 </li>
                 <li
-                  className="hover:text-teal-100 cursor-pointer"
+                  className="cursor-pointer hover:text-yellow-200 transition duration-300 tracking-wide"
                   onClick={() => {
                     setIsLogin(false);
                     setIsModalOpen(true);
@@ -176,7 +179,8 @@ function Navbar() {
         />
       )}
     </>
-  );
+  );  
 }
 
 export default Navbar;
+
