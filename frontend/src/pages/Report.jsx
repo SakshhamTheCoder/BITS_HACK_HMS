@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import API_URL from '../helpers/Config';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const Report = () => {
     const [file, setFile] = useState(null);
-    const [report, setReport] = useState('');
+    const [reportSummary, setReportSummary] = useState('');
+    const [chartData, setChartData] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const handleFileChange = (e) => {
@@ -33,7 +35,8 @@ const Report = () => {
             }
 
             const data = await response.json();
-            setReport(data.report); // Assuming the response includes a `report` field
+            setReportSummary(data.reportSummary);
+            setChartData(data.chartData);
         } catch (err) {
             console.error('Error:', err.message);
             alert('Failed to generate the report. Please try again.');
@@ -70,12 +73,28 @@ const Report = () => {
                         {loading ? 'Generating...' : 'Generate Report'}
                     </button>
                 </form>
-                {report && (
+                {reportSummary && (
                     <div className="mt-10 bg-white shadow-md rounded-lg p-6 max-w-3xl mx-auto">
                         <h3 className="text-2xl font-bold text-gray-800 mb-4">Report</h3>
-                        <p className="text-gray-700 whitespace-pre-wrap">{report}</p>
+                        <p className="text-gray-700 whitespace-pre-wrap">{reportSummary}</p>
                     </div>
                 )}
+                {chartData && (
+                    <div className='w-full mt-10'>
+                        <ResponsiveContainer width="100%" height={200}>
+                            <BarChart data={chartData}>
+                                <CartesianGrid strokeDasharray="2 2" />
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="value" fill="#8884d8" />
+                                <Bar dataKey="normalvalue" fill="#82ca9d" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                )
+                }
             </div>
         </section>
     );

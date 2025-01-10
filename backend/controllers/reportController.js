@@ -22,10 +22,49 @@ const generateReportByImage = async (req, res) => {
                     mimeType: 'image/jpeg',
                 },
             },
-            `Generate a summary report for this doctor report. Explain everything in simple terms. 
-            Exclude the name, lab, date, and patient name. Use simple language only. 
-            Do not include notes, introductions, or generic phrases like "Here's a summary of the blood report." 
-            Focus solely on key findings and recommendations. Dont add any text features like bold italics. keep it simple and possibly in bullets if possible`,
+            `Analyze this blood test report and provide only the abnormal findings:
+
+            List only values that are:
+            - Above normal range (marked H or high)
+            - Below normal range (marked L or low)
+
+            For each abnormal value, include:
+            - The test name in simple terms
+            - The actual value
+            - The normal range
+            - A brief, one-line explanation of what this might mean
+
+            Keep the language simple and concise. Exclude all normal results and administrative details.
+            Avoid including notes, introductions, or generic phrases like 'Here's a summary of the blood report.'
+            Focus exclusively on key findings and actionable recommendations.
+            Format the output as follows:
+            Summary: Provide the main points in bullet format without any stylistic elements like bold or italics.
+            Chart Data: Present numerical or chart-related information in a structured JSON format, specifying labels and corresponding values.
+            Example Output:
+
+            Summary:  
+            - Finding 1: [Description of the finding].  
+            - Finding 2: [Description of the finding].
+            - Finding 3: [Description of the finding].
+            - Finding 4: [Description of the finding].
+            - Finding 5: [Description of the finding].
+            - Recommendation: [Recommendation based on findings].  
+
+            Chart Data:  
+            [
+            {
+                name: "field1",
+                value:"value"
+                normalvalue: "normal value"
+            },
+            {
+                name: "field2",
+                value:"value"
+                normalvalue: "normal value"
+            },
+            ]
+            Do not put the chart data in codeblocks or quotes. Chart Data should have almost everything present in the report rather than only abnormal results. Normal value should be a single average value for the test.
+            Ensure strict adherence to this structure for every response, keeping both summary and chart data aligned.`,
         ];
 
         const result = await model.generateContent(prompt);
@@ -34,7 +73,15 @@ const generateReportByImage = async (req, res) => {
             return res.status(500).json({ error: 'Failed to generate report' });
         }
 
-        res.status(200).json({ report: result.response.candidates[0].content.parts[0].text });
+        const responseText = result.response.candidates[0].content.parts[0].text;
+
+        const [summaryPart, chartDataPart] = responseText.split('Chart Data:');
+        const chartData = chartDataPart ? JSON.parse(chartDataPart.trim()) : {};
+
+        res.status(200).json({
+            reportSummary: summaryPart ? summaryPart.replace('Summary:', '').trim() : '',
+            chartData,
+        });
     } catch (error) {
         console.error('Error generating report:', error);
         res.status(500).json({ error: 'Internal Server Error' });
