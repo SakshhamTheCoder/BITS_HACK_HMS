@@ -107,30 +107,30 @@ function FeaturesSection() {
           className="text-center mb-12"
         >
           <motion.h1
-  className="text-5xl justify-center text-center md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-teal-600 to-gray-300 inline-block tracking-wide"
-  initial={{ rotate: 0, scale: 1, textShadow: "none" }} // Initial state
-  whileHover={{
-    scale: 1.1,
-    rotate: 5,
-    textShadow: "0px 0px 12px rgba(0, 150, 130, 0.8)", // Effects while hovering
-    transition: { 
-      duration: 1, // Duration for the hover effect
-      type: "spring", // Smooth spring transition
-    }
-  }}
-  animate={{
-    rotate: 0, // Reset rotation after hover
-    scale: 1, // Reset scale after hover
-    textShadow: "none", // Reset text shadow after hover
-    transition: {
-      duration: 1, // Duration for the reset effect
-      delay: 1, // Delay the reset effect to start after 1 second
-      type: "spring", // Smooth spring transition
-    }
-  }}
->
-  Why Choose Us?
-</motion.h1>
+            className="text-5xl justify-center text-center md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-teal-600 to-gray-300 inline-block tracking-wide"
+            initial={{ rotate: 0, scale: 1, textShadow: "none" }} // Initial state
+            whileHover={{
+              scale: 1.1,
+              rotate: 5,
+              textShadow: "0px 0px 12px rgba(0, 150, 130, 0.8)", // Effects while hovering
+              transition: {
+                duration: 1, // Duration for the hover effect
+                type: "spring", // Smooth spring transition
+              }
+            }}
+            animate={{
+              rotate: 0, // Reset rotation after hover
+              scale: 1, // Reset scale after hover
+              textShadow: "none", // Reset text shadow after hover
+              transition: {
+                duration: 1, // Duration for the reset effect
+                delay: 1, // Delay the reset effect to start after 1 second
+                type: "spring", // Smooth spring transition
+              }
+            }}
+          >
+            Why Choose Us?
+          </motion.h1>
 
         </motion.div>
 
@@ -208,6 +208,35 @@ function FeaturesSection() {
                 </motion.button>
               </Link>
             </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+              className="bg-gray-800 shadow-md rounded-lg p-8 hover:shadow-lg transition duration-300 flex flex-col items-center text-center"
+            >
+              <div className="flex items-center justify-center bg-gray-700 rounded-full w-16 h-16 mb-6">
+                <FaCalendarCheck className="text-teal-500 text-3xl" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-200 mb-4">
+                Report Analysis
+              </h3>
+              <p className="text-gray-400 mb-6">
+                Analyse your reports and get a .
+              </p>
+              <Link to="/report">
+                <motion.button
+                  whileHover={{
+                    scale: 1.1,
+                    backgroundColor: "rgb(15, 130, 115)",
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  className="px-6 py-3 bg-teal-600 text-white font-medium rounded-full hover:bg-teal-700 transition duration-300"
+                >
+                  Explore
+                </motion.button>
+              </Link>
+            </motion.div>
+
           </div>
         </motion.div>
       </div>

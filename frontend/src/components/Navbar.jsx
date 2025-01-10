@@ -6,6 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, db } from "../helpers/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 function Modal({ loginOrRegister, onClose }) {
   const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ function Modal({ loginOrRegister, onClose }) {
           email,
           password
         );
-        db.collection("users").doc(userCredential.user.uid).set({
+        await setDoc(doc(db, "users", userCredential.user.uid), {
           email: email,
           displayName: username,
           uid: userCredential.user.uid,
@@ -179,7 +180,7 @@ function Navbar() {
         />
       )}
     </>
-  );  
+  );
 }
 
 export default Navbar;
