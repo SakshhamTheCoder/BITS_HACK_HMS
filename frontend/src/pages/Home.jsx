@@ -24,21 +24,21 @@ function HeroSection() {
         <Slider {...sliderSettings}>
           <div>
             <img
-              src="image1.jpg"
+              src="/pic1.jpeg"
               alt=""
               className="w-full h-[450px] object-cover mx-auto rounded-lg shadow-lg"
             />
           </div>
           <div>
             <img
-              src="image2.jpg"
+              src="/pic2.jpeg"
               alt=""
               className="w-full h-[450px] object-cover mx-auto rounded-lg shadow-lg"
             />
           </div>
           <div>
             <img
-              src="image3.jpg"
+              src="/pic3.jpeg"
               alt=""
               className="w-full h-[450px] object-cover mx-auto rounded-lg shadow-lg"
             />
@@ -221,7 +221,7 @@ function FeaturesSection() {
                 Report Analysis
               </h3>
               <p className="text-gray-400 mb-6">
-                Analyse your reports and get a .
+                Analyse your reports and get a detailed summary about your health!
               </p>
               <Link to="/report">
                 <motion.button
