@@ -5,7 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 const Report = () => {
     const [file, setFile] = useState(null);
     const [reportSummary, setReportSummary] = useState('');
-    const [chartData, setChartData] = useState([]);
+    const [chartData, setChartData] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const handleFileChange = (e) => {

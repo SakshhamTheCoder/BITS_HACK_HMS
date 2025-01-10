@@ -1,2 +1,2 @@
-const API_URL = "http://127.0.0.1:3000/api";
+const API_URL = "https://arogyam-backend.vercel.app/api";
 export default API_URL;
