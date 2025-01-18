@@ -34,7 +34,9 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
+      <Navbar visible={
+        (window.location.pathname !== '' || window.location.pathname !== '/') && loggedIn
+      } />
       <Routes>
         <Route path="/" element={loggedIn ? <Dashboard /> : <Home />} />
         <Route path="*" element={<Navigate to="/" />} />
