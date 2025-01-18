@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import { Navigate } from 'react-router-dom';
 import Schedule from './pages/Schedule';
 import AboutUs from './components/AboutUs';
+import Report from './pages/Report';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -43,6 +44,7 @@ function App() {
         />
         <Route path="/appointment/schedule" element={loggedIn ? <Schedule /> : <Navigate to="/" />} />
         <Route path="/AboutUs" element={<AboutUs />} />
+        <Route path="/report" element={loggedIn ? <Report /> : <Navigate to="/" />} />
       </Routes>
       <Footer />
     </Router>

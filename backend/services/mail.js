@@ -1,13 +1,17 @@
 const cron = require('node-cron');
 const nodemailer = require('nodemailer');
 const { firestore } = require('./firebase'); // Adjust import as needed
+require('dotenv').config();
+
+const mail = process.env.MAIL;
+const pass = process.env.PASS;
 
 // Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
     service: 'gmail', // Replace with your email service
     auth: {
-        user: 'email', // Your email
-        pass: 'pass', // Your email password or app password
+        user: mail, // Your email
+        pass: pass, // Your email password or app password
     },
 });
 
@@ -50,7 +54,7 @@ const checkAndSendReminders = async () => {
 
             // Send email
             const mailOptions = {
-                from: 'email',
+                from: mail,
                 to: userEmail,
                 subject: 'Upcoming Appointment Reminder',
                 text: `Hello! This is a reminder for your upcoming appointment with Dr. ${appointment.doctorName} at ${appointment.appointmentTime}.`,

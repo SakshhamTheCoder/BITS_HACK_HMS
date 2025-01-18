@@ -13,3 +13,4 @@ config/serviceAccountKey.json
 logs/
 *.log
 npm-debug.log*
+.vercel
