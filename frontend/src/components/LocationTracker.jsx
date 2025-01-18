@@ -126,82 +126,104 @@ const LocationTracker = () => {
   }
 
   return (
-    <div className="bg-teal-50 min-h-screen">
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-16 bg-teal-50 text-center">
-        <div className="container mx-auto">
-          <h2 className="text-2xl font-semibold text-teal-800 mb-4">
-            Your Location: {location.lat}, {location.lng}
-          </h2>
-          <div className="mb-8">
-            <label className="block text-teal-700 mb-2">Search Radius (meters):</label>
-            <input
-              type="number"
-              value={radius}
-              onChange={(e) => setRadius(parseInt(e.target.value, 10))}
-              className="w-1/2 p-2 rounded-lg border border-teal-300 mb-4"
-            />
-            <button
-              onClick={() => fetchNearbyHospitals(location.lat, location.lng, radius)}
-              className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition duration-300"
-            >
-              Update Search
-            </button>
-          </div>
-          <button
-            onClick={updateLocationManually}
-            className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition duration-300"
-          >
-            Update Latitude/Longitude
-          </button>
-        </div>
-      </section>
-
-      {/* Map and Hospitals List */}
-      <section className="py-16">
-        <div className="container mx-auto">
-          <MapContainer
-            center={[location.lat, location.lng]}
-            zoom={14}
-            style={{ height: "500px", width: "100%" }}
-          >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={[location.lat, location.lng]} icon={redIcon}>
-              <Popup>Your Location</Popup>
-            </Marker>
-            {filteredHospitals.map((hospital, index) => (
-              <Marker
-                key={index}
-                position={[hospital.lat || hospital.center?.lat, hospital.lon || hospital.center?.lon]}
-              >
-                <Popup>
-                  <h3>{hospital.tags?.name || "Unnamed Hospital"}</h3>
-                  <p>Address: {hospital.tags?.["addr:full"] || "Not Available"}</p>
-                  <p>Rating: ⭐ {hospital.rating} ({hospital.reviews} reviews)</p>
-                </Popup>
-              </Marker>
-            ))}
-          </MapContainer>
-
-          <h3 className="text-xl font-semibold text-teal-700 mt-8">Nearby Hospitals:</h3>
-          {filteredHospitals.length > 0 ? (
-            <ul className="space-y-4">
-              {filteredHospitals.map((hospital, index) => (
-                <li key={index} className="bg-white p-4 rounded-lg shadow-md">
-                  <strong className="text-lg text-teal-800">{hospital.tags?.name || "Unnamed Hospital"}</strong>
-                  <p>Address: {hospital.tags?.["addr:full"] || "Not Available"}</p>
-                  <p>Rating: ⭐ {hospital.rating} ({hospital.reviews} reviews)</p>
-                  <p>Latitude: {hospital.lat}, Longitude: {hospital.lon}</p>
-                  <p>Postal Code: {hospital.tags?.["addr:postcode"] || "Not Available"}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No hospitals found matching the search query.</p>
-          )}
-        </div>
-      </section>
+<div className="bg-gray-50 mt-12 min-h-screen">
+  {/* Hero Section */}
+  <section className="relative pt-24 pb-16 bg-gray-50 text-center">
+    <div className=" bg-gray-50 -m-0 container mx-auto px-6">
+      <h2 className="text-3xl font-bold text-[#14737e] mb-6">
+        Your Location: {location.lat}, {location.lng}
+      </h2>
+      <div className="bg-white rounded-lg shadow-md px-8 py-6 max-w-lg mx-auto">
+  <label className="block text-lg font-medium text-gray-700 mb-4">
+    Search Radius (meters):
+  </label>
+  <div className="flex items-center space-x-4">
+    <input
+      type="number"
+      value={radius}
+      onChange={(e) => setRadius(parseInt(e.target.value, 10))}
+      className="flex-1 p-3 rounded-md border border-gray-300 focus:ring-[#14737e] focus:border-[#14737e]"
+    />
+    <button
+      onClick={() => fetchNearbyHospitals(location.lat, location.lng, radius)}
+      className="px-6 py-3 bg-[#14737e] text-white rounded-lg hover:bg-[#125e55] transition duration-300 shadow-md"
+    >
+      Update Search
+    </button>
+  </div>
+</div>
+      <button
+        onClick={updateLocationManually}
+        className="mt-6 px-6 py-3 bg-[#14737e] text-white rounded-lg hover:bg-[#125e55] transition duration-300 shadow-md"
+      >
+        Update Latitude/Longitude
+      </button>
     </div>
+  </section>
+
+  {/* Map and Hospitals List */}
+  <section className="py-12">
+    <div className="container mx-auto px-6">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <MapContainer
+          center={[location.lat, location.lng]}
+          zoom={14}
+          style={{ height: "500px", width: "100%" }}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <Marker position={[location.lat, location.lng]} icon={redIcon}>
+            <Popup>Your Location</Popup>
+          </Marker>
+          {filteredHospitals.map((hospital, index) => (
+            <Marker
+              key={index}
+              position={[hospital.lat || hospital.center?.lat, hospital.lon || hospital.center?.lon]}
+            >
+              <Popup>
+                <h3>{hospital.tags?.name || "Unnamed Hospital"}</h3>
+                <p>Address: {hospital.tags?.["addr:full"] || "Not Available"}</p>
+                <p>Rating: ⭐ {hospital.rating} ({hospital.reviews} reviews)</p>
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
+      </div>
+
+      <h3 className="text-3xl font-bold text-[#14737e] mt-12 mb-6">Nearby Hospitals:</h3>
+      {filteredHospitals.length > 0 ? (
+        <ul className="space-y-6">
+          {filteredHospitals.map((hospital, index) => (
+            <li
+              key={index}
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+            >
+              <strong className="block text-lg font-bold text-[#14737e] mb-2">
+                {hospital.tags?.name || "Unnamed Hospital"}
+              </strong>
+              <p className="text-gray-700 mb-2">
+                Address: {hospital.tags?.["addr:full"] || "Not Available"}
+              </p>
+              <p className="text-gray-700 mb-2">
+                Rating: ⭐ {hospital.rating} ({hospital.reviews} reviews)
+              </p>
+              <p className="text-gray-700 mb-2">
+                Latitude: {hospital.lat}, Longitude: {hospital.lon}
+              </p>
+              <p className="text-gray-700">
+                Postal Code: {hospital.tags?.["addr:postcode"] || "Not Available"}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-center text-red-700 text-lg font-medium">
+          No hospitals found matching the search query.
+        </p>
+      )}
+    </div>
+  </section>
+</div>
+
   );
 };
 
