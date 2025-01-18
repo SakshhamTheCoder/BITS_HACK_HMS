@@ -63,7 +63,7 @@ function FeaturesSection() {
     <section
       id="dashboard"
       ref={ref}
-      className="py-0 bg-white text-gray-800 mt-16" 
+      className="py-0 bg-white text-gray-800 mt-16"
     >
       <div className="container mx-auto">
         {/* Creative Section Heading */}
@@ -71,20 +71,21 @@ function FeaturesSection() {
           variants={headingVariants}
           initial="hidden"
           animate={controls}
-          className="text-center mb-12"
+          className="text-center mb-0"
         >
           <motion.h1
-            className="text-5xl justify-center text-center md:text-6xl font-extrabold text-[#14737e] bg-clip-text bg-gray-400 inline-block tracking-wide"
-            initial={{ rotate: 0, scale: 1, textShadow: "none" }} // Initial state
+            className="text-3xl justify-center text-center md:text-4xl font-extrabold text-[#14737e] bg-clip-text bg-gray-400 inline-block tracking-wide"
+            initial={{ rotate: 0, scale: 1, textShadow: "none" }}
             whileHover={{
               scale: 1.1,
               transition: {
-                duration: 1, // Duration for the hover effect
-                type: "spring", // Smooth spring transition
+                duration: 1,
+                type: "spring",
               },
             }}
           >
-            Why Choose Us?
+            Comprehensive Hospital Management Solutions That Help You Focus on
+            What Truly Matters ~ "Your Patients"
           </motion.h1>
         </motion.div>
 
@@ -97,103 +98,71 @@ function FeaturesSection() {
         >
           <motion.p
             variants={itemVariants}
-            className="text-lg text-gray-900 text-center mb-12 leading-relaxed"
+            className="text-xl text-gray-900 text-center mt-12 mb-12 leading-relaxed"
           >
-            Our platform provides cutting-edge solutions for your healthcare
-            needs, ensuring convenience and efficiency at every step.
+            Our platform provides cutting-edge solutions designed to meet the
+            diverse healthcare needs of hospitals and healthcare providers. By
+            integrating advanced technologies, we ensure seamless operations,
+            reducing manual processes, and enhancing patient care. From patient
+            registration to billing and discharge, our system streamlines every
+            step, offering unparalleled convenience and operational efficiency.
           </motion.p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-            {/* Feature 1 */}
-            <motion.div
-              variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              className="bg-[#14737e] shadow-md rounded-lg p-8 hover:shadow-lg transition duration-300 flex flex-col items-center text-center"
-            >
-              <div className="flex items-center justify-center bg-white rounded-full w-16 h-16 mb-6">
-                <FaMapMarkedAlt className="text-[#14737e] text-3xl" />
-              </div>
-              <h3 className="text-2xl font-semibold text-white mb-4">
-                Nearby Hospital Locator
-              </h3>
-              <p className="text-white mb-6">
-                Tracks and displays nearby hospitals for emergencies or routine
-                care.
-              </p>
-              <Link to="/nearby">
-                <motion.button
-                  whileHover={{
-                    scale: 1.1,
-                    backgroundColor: "#FFFFFF",
-                  }}
-                  whileTap={{ scale: 0.9 }}
-                  className="px-6 py-3 bg-white text-[#14737e] font-medium rounded-full hover: transition duration-300"
-                >
-                  Explore
-                </motion.button>
-              </Link>
-            </motion.div>
-
-            {/* Feature 2 */}
-            <motion.div
-              variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              className="bg-[#14737e] shadow-md rounded-lg p-8 hover:shadow-lg transition duration-300 flex flex-col items-center text-center"
-            >
-              <div className="flex items-center justify-center bg-white rounded-full w-16 h-16 mb-6">
-                <FaCalendarCheck className="text-[#14737e] text-3xl" />
-              </div>
-              <h3 className="text-2xl font-semibold text-white mb-4">
-                Appointment Scheduling
-              </h3>
-              <p className="text-white mb-6">
-                Easily schedule, reschedule, or cancel appointments with a few
-                clicks.
-              </p>
-              <Link to="/appointment">
-              <motion.button
-                  whileHover={{
-                    scale: 1.1,
-                    backgroundColor: "#FFFFFF",
-                  }}
-                  whileTap={{ scale: 0.9 }}
-                  className="px-6 py-3 bg-white text-[#14737e] font-medium rounded-full hover: transition duration-300"
-                >
-                  Explore
-                </motion.button>
-              </Link>
-            </motion.div>
-
-            {/* Feature 3 */}
-            <motion.div
-              variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              className="bg-[#14737e] shadow-md rounded-lg p-8 hover:shadow-lg transition duration-300 flex flex-col items-center text-center"
-            >
-              <div className="flex items-center justify-center bg-white rounded-full w-16 h-16 mb-6">
-                <FaCalendarCheck className="text-[#14737e] text-3xl" />
-              </div>
-              <h3 className="text-2xl font-semibold text-white mb-4">
-                Report Analysis
-              </h3>
-              <p className="text-white mb-6">
-                Analyse your reports and get a detailed summary about your
-                health!
-              </p>
-              <Link to="/report">
-              <motion.button
-                  whileHover={{
-                    scale: 1.1,
-                    backgroundColor: "#FFFFFF",
-                  }}
-                  whileTap={{ scale: 0.9 }}
-                  className="px-6 py-3 bg-white text-[#14737e] font-medium rounded-full hover: transition duration-300"
-                >
-                  Explore
-                </motion.button>
-              </Link>
-            </motion.div>
-          </div>
         </motion.div>
+
+        {/* Feature Blocks */}
+        <div className="mt-12 space-y-16">
+          {/* Feature 1 */}
+          <div className="flex flex-col md:flex-row items-center">
+            <img
+              src="img1.jpeg"
+              alt=""
+              className="w-3/4 md:w-3/4 rounded-lg"
+            />
+            <div className="md:ml-8">
+              <h2 className="text-3xl font-extrabold text-gray-800">
+              Nearby Hospital Locator
+              </h2>
+              <p className="text-gray-600 text-lg mt-4">
+              Finding the right hospital became effortless using our advanced GPS and real-time data, we provide tailored recommendations based on specialties, services, and reviews. With precise navigation and live updates, we ensure stress-free, quick access to quality healthcare facilities when you need it most.
+              </p>
+            </div>
+          </div>
+
+          {/* Feature 2 */}
+          <div className="flex flex-col md:flex-row-reverse items-center">
+            <img
+              src="img2.jpeg"
+              alt=""
+              className="w-3/4 md:w-3/4 rounded-lg"
+            />
+            <div className="md:mr-8">
+              <h2 className="text-3xl font-extrabold text-gray-800">
+              Appointment Scheduling
+              </h2>
+              <p className="text-gray-600 text-lg mt-4">
+              Book appointments hassle-free with our Appointment Scheduling feature. View real-time doctor availability, confirm bookings instantly, and reschedule effortlessly. Automated reminders and a seamless interface ensure a smooth healthcare experience, saving you time and eliminating long waits.
+
+              </p>
+            </div>
+          </div>
+
+          {/* Feature 3 */}
+          <div className="flex flex-col md:flex-row items-center">
+            <img
+              src="img3.jpeg"
+              alt=""
+              className="w-3/4 md:w-3/4 rounded-lg"
+            />
+            <div className="md:ml-8">
+              <h2 className="text-3xl font-extrabold text-gray-800">
+              Report Analysis
+              </h2>
+              <p className="text-gray-600 text-lg mt-4">
+              Make sense of your medical data with our Report Analysis tool. Get clear insights, interactive visualizations, and trend comparisons at a glance. Powered by AI, it highlights key health patterns, ensures secure storage, and empowers informed decisions for better health management.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
