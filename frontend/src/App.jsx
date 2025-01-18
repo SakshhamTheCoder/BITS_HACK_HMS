@@ -11,6 +11,7 @@ import { Navigate } from 'react-router-dom';
 import Schedule from './pages/Schedule';
 import AboutUs from './components/AboutUs';
 import Report from './pages/Report';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -35,7 +36,7 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={loggedIn ? <Dashboard /> : <Home />} />
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/nearby" element={<LocationTracker />} />
         <Route
