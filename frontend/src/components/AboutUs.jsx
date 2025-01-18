@@ -195,7 +195,7 @@ const AboutUs = () => {
             transition={{ delay: 0.5, duration: 1 }}
           >
             <img
-              src="/dhruv.jpeg" // Make sure this is the correct path to your image
+              src="/dhruv.jpg" // Make sure this is the correct path to your image
               alt="dhruv"
               className="w-43 h-42 object-cover rounded-lg shadow-lg"
             />
@@ -264,7 +264,7 @@ const AboutUs = () => {
             transition={{ delay: 0.5, duration: 1 }}
           >
             <img
-              src="/sakshham.jpeg" // Make sure this is the correct path to your image
+              src="/sakshham.jpg" // Make sure this is the correct path to your image
               alt="sakshham"
               className="w-43 h-42 object-cover rounded-lg shadow-lg"
             />
