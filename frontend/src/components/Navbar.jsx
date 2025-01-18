@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../helpers/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { FaBars } from "react-icons/fa";
 
 function Modal({ loginOrRegister, onClose }) {
   const [email, setEmail] = useState("");
@@ -127,52 +128,83 @@ function Navbar() {
       alert(error.message);
     }
   };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <>
-      <nav className="bg-gradient-to-r from-teal-700 to-teal-800 text-white fixed w-full shadow-lg z-10 top-0">
-        <div className="container mx-auto px-6 flex justify-between items-center py-4">
-          <div className="text-2xl font-bold tracking-wide hover:scale-110 transition-transform duration-300">
-            <Link to="/" className="hover:text-yellow-100">
-              Arogyam
-            </Link>
-          </div>
-          <ul className="hidden md:flex space-x-6 items-center">
-            <li className="cursor-pointer hover:text-yellow-200 transition duration-300 tracking-wide">
-              <Link to="/AboutUs">About Us</Link>
-            </li>
-            {auth.currentUser !== null ? (
-              <li
-                onClick={handleLogout}
-                className="cursor-pointer hover:text-yellow-200 transition duration-300 tracking-wide"
-              >
-                Logout
-              </li>
-            ) : (
-              <>
-                <li
-                  className="cursor-pointer hover:text-yellow-200 transition duration-300 tracking-wide"
-                  onClick={() => {
-                    setIsLogin(true);
-                    setIsModalOpen(true);
-                  }}
-                >
-                  Login
-                </li>
-                <li
-                  className="cursor-pointer hover:text-yellow-200 transition duration-300 tracking-wide"
-                  onClick={() => {
-                    setIsLogin(false);
-                    setIsModalOpen(true);
-                  }}
-                >
-                  Register
-                </li>
-              </>
-            )}
-          </ul>
+ <nav className="bg-[#14737e] text-white fixed w-[calc(100%-4rem)] shadow-lg z-10 top-9 mx-6 rounded-lg">
+      <div className="relative container mx-auto px-6 flex items-center justify-between py-4">
+        {/* Left Section */}
+        <div className="text-xl font-bold tracking-wide">
+          <Link to="/" className="hover:text-yellow-100">
+            Arogyam
+          </Link>
         </div>
-      </nav>
+
+        {/* Centered Logo */}
+        <div className="absolute inset-0 flex justify-center items-center">
+          <div className="rounded-full bg-[#14737e] w-24 h-24 flex justify-center items-center">
+            <img
+              src="arogyamlogo.jpg"
+              alt="Arogyam Logo"
+              className="w-20 h-20 rounded-full object-contain"
+            />
+          </div>
+        </div>
+
+        <div className="relative">
+          <FaBars
+            className="text-2xl cursor-pointer hover:scale-110 transition-transform duration-300"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          />
+          {/* Dropdown Menu */}
+          {isMenuOpen && (
+            <ul className="absolute right-0 mt-2 bg-white text-black shadow-lg rounded-lg py-2 w-40">
+              <li className="px-4 py-2 hover:bg-[#125e66] cursor-pointer">
+                <Link to="/AboutUs">About Us</Link>
+              </li>
+              {auth.currentUser !== null ? (
+                <li
+                  onClick={() => {
+                    handleLogout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="px-4 py-2 hover:bg-[#125e66] cursor-pointer"
+                >
+                  Logout
+                </li>
+              ) : (
+                <>
+                  <li
+                    className="px-4 py-2 hover:bg-[#125e66] cursor-pointer"
+                    onClick={() => {
+                      setIsLogin(true);
+                      setIsModalOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Login
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-[#125e66] cursor-pointer"
+                    onClick={() => {
+                      setIsLogin(false);
+                      setIsModalOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    Register
+                  </li>
+                </>
+              )}
+            </ul>
+          )}
+        </div>
+      </div>
+    </nav>
+
+
+
       {isModalOpen && (
         <Modal
           loginOrRegister={isLogin}
