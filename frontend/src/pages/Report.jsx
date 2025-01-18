@@ -48,6 +48,7 @@ const Report = () => {
     return (
         <section id="report" className="py-20 bg-gray-50 min-h-[95vh]">
         <div className="container mx-auto px-6">
+        <h2 className="text-5xl font-bold text-center text-[#14737e] mt-12 mb-12">Generate Report</h2>
             <form
                 onSubmit={handleSubmit}
                 className="bg-white shadow-lg rounded-lg p-10 max-w-xl mx-auto"

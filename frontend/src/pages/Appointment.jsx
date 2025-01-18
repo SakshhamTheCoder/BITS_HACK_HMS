@@ -68,42 +68,49 @@ const Appointment = () => {
   }
 
   return (
-    <section id="dashboard" className="py-20 bg-white min-h-[95vh]">
-      <div className="container mx-auto">
-        <h2 className="text-4xl font-bold font-sans text-center text-teal-800 mb-8">Your Appointments</h2>
-        <div className="text-center mb-8">
-          <Link
-            to="/appointment/schedule"
-            className="px-4 py-2 bg-teal-800 text-white rounded-md hover:bg-teal-700 transition duration-300"
-          >
-            Schedule Appointment
-          </Link>
-        </div>
-        <div className="px-10 py-6">
-          {appointments.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {appointments.map((appointment) => (
-                <div key={appointment.id} className="bg-teal-50 shadow-md rounded-lg p-6 text-center">
-                  <h3 className="text-lg font-semibold text-teal-800 mb-3">
-                    Appointment with {appointment.doctorName} at {appointment.hospitalName}
-                  </h3>
-                  <p className="text-teal-600 mb-4">Date: {appointment.appointmentDate}</p>
-                  <p className="text-teal-600 mb-4">Time: {appointment.appointmentTime}</p>
-                  <button className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-300" onClick={() => cancelAppointment(appointment.id)}>
-                    Cancel Appointment
-                  </button>
-                </div>
-              ))}
+<section id="dashboard" className="py-20 bg-gray-100 min-h-[95vh]">
+  <div className="container mx-auto px-6">
+    <h2 className="text-5xl font-bold text-center text-[#14737e] mt-12 mb-12">Your Appointments</h2>
+    <div className="text-center mb-8">
+      <Link
+        to="/appointment/schedule"
+        className="px-6 py-3 bg-[#14737e] text-white rounded-lg hover:bg-[#125e55] transition duration-300 shadow-md"
+      >
+        Schedule Appointment
+      </Link>
+    </div>
+    <div className="bg-white rounded-lg shadow-md px-8 py-10">
+      {appointments.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {appointments.map((appointment) => (
+            <div
+              key={appointment.id}
+              className="bg-gray-100 shadow-lg rounded-lg p-6 text-center hover:shadow-lg transition duration-300"
+            >
+              <h3 className="text-xl font-semibold text-[#14737e] mb-4">
+                Appointment with {appointment.doctorName}
+              </h3>
+              <p className="text-gray-700 mb-2">Hospital: {appointment.hospitalName}</p>
+              <p className="text-gray-700 mb-2">Date: {appointment.appointmentDate}</p>
+              <p className="text-gray-700 mb-4">Time: {appointment.appointmentTime}</p>
+              <button
+                className="px-5 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-300 shadow-md"
+                onClick={() => cancelAppointment(appointment.id)}
+              >
+                Cancel Appointment
+              </button>
             </div>
-          ) : (
-            <p className="text-center text-red-700">
-              You have no appointments scheduled at the moment.
-            </p>
-          )}
-
+          ))}
         </div>
-      </div>
-    </section>
+      ) : (
+        <p className="text-center text-red-700 text-xl font-semibold">
+          You have no appointments scheduled at the moment.
+        </p>
+      )}
+    </div>
+  </div>
+</section>
+
   );
 };
 

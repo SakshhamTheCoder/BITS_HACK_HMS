@@ -74,11 +74,10 @@ function FeaturesSection() {
   };
 
   const headingVariants = {
-    hidden: { opacity: 0, y: -50, rotate: -10, scale: 0.8 },
+    hidden: { opacity: 0, y: -50, scale: 0.8 },
     visible: {
       opacity: 1,
       y: 0,
-      rotate: 0,
       scale: 1,
       transition: {
         duration: 1,
