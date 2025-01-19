@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaMapMarkedAlt, FaCalendarCheck } from 'react-icons/fa';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 const Dashboard = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [userName, setUserName] = useState('');
+    
+    useEffect(() => {
+        const fetchUserName = async () => {
+            const auth = getAuth();
+            const db = getFirestore();
+            
+            if (auth.currentUser) {
+                try {
+                    const userDoc = await getDoc(doc(db, 'users', auth.currentUser.uid));
+                    if (userDoc.exists()) {
+                        setUserName(userDoc.data().displayName);
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                } finally {
+                    setIsLoading(false);
+                }
+            }
+        };
+
+        fetchUserName();
+    }, []);
+
     // Animation Variants
     const containerVariants = {
         hidden: { opacity: 0, scale: 0.9 },
@@ -35,18 +62,22 @@ const Dashboard = () => {
         },
     };
 
+    const WelcomeMessage = isLoading ? '' : `Welcome, ${userName || 'User'}!`;
+
     return (
         <div className='py-16 min-h-[90vh] overflow-hidden'>
             <Navbar />
             <div className="mt-16 text-center">
-                <motion.h1
+                {!isLoading && (
+                    <motion.h1
                     variants={headingVariants}
                     initial="hidden"
                     animate="visible"
                     className="text-5xl font-extrabold text-gray-800 mb-8"
                 >
-                    Welcome to Your Dashboard
+                    {WelcomeMessage}
                 </motion.h1>
+                )}
             </div>
             {/* Section Content */}
             <motion.div
@@ -152,6 +183,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-
-

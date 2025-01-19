@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { db, auth } from "../helpers/firebase";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 import API_URL from "../helpers/Config";
+import { toast } from 'react-toastify';
 
 // Default marker icon setup
 delete L.Icon.Default.prototype._getIconUrl;
@@ -63,7 +64,7 @@ const LocationTracker = () => {
       }
     } catch (error) {
       console.error("Error fetching hospitals:", error.message);
-      alert("Unable to fetch nearby hospitals. Please try again later.");
+      toast.error("Unable to fetch nearby hospitals. Please try again later.");
     }
   };
 
@@ -91,7 +92,7 @@ const LocationTracker = () => {
       setLocation({ lat, lng });
       fetchNearbyHospitals(lat, lng, radius);
     } else {
-      alert("Invalid coordinates. Please try again.");
+      toast.error("Invalid coordinates. Please try again.");
     }
   };
 

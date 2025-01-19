@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  signOut,
-} from "firebase/auth";
-import { auth, } from "../helpers/firebase";
+import { signOut } from "firebase/auth";
+import { auth } from "../helpers/firebase";
 import { FaBars } from "react-icons/fa";
-
+import { toast } from 'react-toastify';
 
 function Navbar({ visible }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,16 +13,19 @@ function Navbar({ visible }) {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      alert("Logged out successfully!");
+      toast.success("Logged out successfully!");
       window.location.reload();
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
     }
   };
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   if (!visible) {
     return null;
   }
+  
   return (
     <>
       <nav className="bg-[#14737e] text-white fixed w-[calc(100%-4rem)] shadow-lg z-10 top-9 mx-6 rounded-lg">
@@ -76,8 +77,6 @@ function Navbar({ visible }) {
         </div>
       </nav>
 
-
-
       {isModalOpen && (
         <Modal
           loginOrRegister={isLogin}
@@ -89,4 +88,3 @@ function Navbar({ visible }) {
 }
 
 export default Navbar;
-

@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../helpers/firebase";
 import { setDoc, doc } from "firebase/firestore";
-
+import { toast } from 'react-toastify';
 
 
 function Modal({ loginOrRegister, onClose }) {
@@ -18,7 +18,7 @@ function Modal({ loginOrRegister, onClose }) {
     try {
       if (loginOrRegister) {
         await signInWithEmailAndPassword(auth, email, password);
-        alert("Logged in successfully!");
+        toast.success("Logged in successfully!");
       } else {
         const userCredential = await createUserWithEmailAndPassword(
           auth,
@@ -31,12 +31,12 @@ function Modal({ loginOrRegister, onClose }) {
           uid: userCredential.user.uid,
           createdAt: new Date(),
         });
-        alert("Registered successfully!");
+        toast.success("Registered successfully!");
       }
       onClose();
-    } catch (error) {
-      alert(error.message);
-    }
+      } catch (error) {
+        toast.error(error.message);
+      }
   };
 
   return (
