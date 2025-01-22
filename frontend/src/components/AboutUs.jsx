@@ -4,32 +4,32 @@ import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
 const AboutUs = () => {
   return (
-    <div className="bg-gradient-to-b from-black via-gray-800 to-gray-900 text-white min-h-screen flex flex-col justify-center pt-20 py-10">
- <motion.h1
-  className="text-5xl justify-center text-center md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-teal-600 to-gray-300 inline-block tracking-wide"
-  initial={{ rotate: 0, scale: 1, textShadow: "none" }} // Initial state
-  whileHover={{
-    scale: 1.1,
-    rotate: 5,
-    textShadow: "0px 0px 12px rgba(0, 150, 130, 0.8)", // Effects while hovering
-    transition: { 
-      duration: 1, // Duration for the hover effect
-      type: "spring", // Smooth spring transition
-    }
-  }}
-  animate={{
-    rotate: 0, // Reset rotation after hover
-    scale: 1, // Reset scale after hover
-    textShadow: "none", // Reset text shadow after hover
-    transition: {
-      duration: 1, // Duration for the reset effect
-      delay: 1, // Delay the reset effect to start after 1 second
-      type: "spring", // Smooth spring transition
-    }
-  }}
->
-  Meet Our Team
-</motion.h1>
+    <div className="bg-gradient-to-b from-black via-gray-800 to-gray-900 text-white min-h-screen flex flex-col justify-center pt-40 py-8">
+      <motion.h1
+        className="text-5xl -mt-21 justify-center text-center md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-teal-600 to-gray-300 inline-block tracking-wide"
+        initial={{ rotate: 0, scale: 1, textShadow: "none" }}
+        whileHover={{
+          scale: 1.1,
+          rotate: 5,
+          textShadow: "0px 0px 12px rgba(0, 150, 130, 0.8)",
+          transition: { 
+            duration: 1,
+            type: "spring",
+          }
+        }}
+        animate={{
+          rotate: 0,
+          scale: 1,
+          textShadow: "none",
+          transition: {
+            duration: 1,
+            delay: 1,
+            type: "spring",
+          }
+        }}
+      >
+        Meet Our Team
+      </motion.h1>
 
       {/* Member 1 */}
       <motion.div
@@ -56,7 +56,7 @@ const AboutUs = () => {
             transition={{ delay: 0.5, duration: 1 }}
           >
             <img
-              src="/shree.png" // Make sure this is the correct path to your image
+              src="/shree.jpeg" // Make sure this is the correct path to your image
               alt="shree"
               className="w-43 h-42 object-cover rounded-lg shadow-lg"
             />
