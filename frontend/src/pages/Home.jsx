@@ -482,26 +482,28 @@ function HeroSection() {
 
   return (
     <section className="bg-white py-6 text-center relative pt-0 min-h-screen">
-      <motion.div
-        className="absolute w-full md:w-2/5 top-1/4 left-0 md:left-24 bg-white bg-opacity-70 p-4 md:p-16 rounded-2xl shadow-lg mx-4 md:mx-0"
+      <motion.div 
+        className="hidden md:block absolute w-2/5 top-1/4 left-24 bg-white bg-opacity-70 p-16 rounded-2xl shadow-lg" // Desktop version
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true }}
       >
-        <motion.h1 className="text-4xl md:text-6xl font-extrabold text-[#14737e] mb-4 md:mb-6">
+        <motion.h1 className="text-6xl font-extrabold text-[#14737e] mb-6">
           This is Arogyam
         </motion.h1>
-        <motion.p className="text-base md:text-lg font-semibold text-gray-800 px-2 md:px-0">
-          We streamline the flow of critical information across all departments, equipping hospitals with real-time insights to enhance patient care, optimize administration, simplify billing, manage insurance, and much more. empowering healthcare decisions with precision and efficiency.
+        <motion.p className="text-lg font-semibold text-gray-800">
+          We streamline the flow of critical information across all departments, equipping hospitals 
+          with real-time insights to enhance patient care, optimize administration, simplify billing, 
+          manage insurance, and much more, empowering healthcare decisions with precision and efficiency.
         </motion.p>
-        <div className="flex flex-col md:flex-row justify-center items-center mt-2 space-y-4 md:space-y-0 md:space-x-4">
+        <div className="flex justify-center items-center mt-2 space-x-4">
           <button
             onClick={() => {
               setIsLogin(true);
               setIsModalOpen(true);
             }}
-            className="w-full md:w-auto bg-[#14737e] text-white font-semibold px-6 py-2 rounded-lg"
+            className="bg-[#14737e] text-white font-semibold px-6 py-2 rounded-lg"
           >
             Login
           </button>
@@ -510,19 +512,61 @@ function HeroSection() {
               setIsLogin(false);
               setIsModalOpen(true);
             }}
-            className="w-full md:w-auto bg-[#14737e] text-white font-semibold px-6 py-2 rounded-lg"
+            className="bg-[#14737e] text-white font-semibold px-6 py-2 rounded-lg"
           >
             Register
           </button>
         </div>
       </motion.div>
+
+      {/* Mobile version */}
+      <motion.div 
+        className="md:hidden absolute inset-0 flex items-center justify-center px-4"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
+        <div className="bg-white bg-opacity-90 p-6 rounded-xl shadow-lg max-w-md w-full">
+          <motion.h1 className="text-3xl font-bold text-[#14737e] mb-4 text-center">
+            This is Arogyam
+          </motion.h1>
+          <motion.p className="text-sm text-gray-800 text-center mb-6">
+            We streamline the flow of critical information across all departments, equipping hospitals 
+            with real-time insights to enhance patient care, optimize administration, simplify billing, 
+            manage insurance, and much more, empowering healthcare decisions with precision and efficiency.
+          </motion.p>
+          <div className="space-y-3">
+            <button
+              onClick={() => {
+                setIsLogin(true);
+                setIsModalOpen(true);
+              }}
+              className="w-full bg-[#14737e] text-white font-semibold px-6 py-2.5 rounded-lg"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => {
+                setIsLogin(false);
+                setIsModalOpen(true);
+              }}
+              className="w-full bg-[#14737e] text-white font-semibold px-6 py-2.5 rounded-lg"
+            >
+              Register
+            </button>
+          </div>
+        </div>
+      </motion.div>
+
       <img 
         src="hms.jpg" 
         alt="Hospital Management System" 
-        className="w-full h-screen object-cover"
+        className="w-full h-screen object-cover" 
         loading="eager"
         sizes="100vw"
       />
+
       {isModalOpen && (
         <Modal loginOrRegister={isLogin} onClose={() => setIsModalOpen(false)} />
       )}

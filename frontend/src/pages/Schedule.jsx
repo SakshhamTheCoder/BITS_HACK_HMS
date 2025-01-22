@@ -109,9 +109,9 @@ const Schedule = () => {
     };
 
     return (
-        <section className="py-20 bg-white min-h-[95vh]">
-            <div className="container mx-auto max-w-lg">
-                <h2 className="text-4xl font-bold text-teal-800 text-center mb-6">Schedule an Appointment</h2>
+        <section className="min-h-screen bg-white pt-28">
+            <div className="container mx-auto max-w-lg px-4">
+                <h2 className="text-4xl font-bold text-[#004D40] text-center mb-8">Schedule an Appointment</h2>
                 <form onSubmit={handleSubmit} className="bg-teal-50 p-6 rounded-lg shadow-md">
                     {/* Hospital Dropdown */}
                     <div className="mb-4">
@@ -142,7 +142,7 @@ const Schedule = () => {
                         >
                             <option value="">Select a doctor</option>
                             {doctors.map((doctor, index) => (
-                                <option key={index} value={doctor.name}>
+                                <option key={index} value={`${doctor.name}`}>
                                     {doctor.name} - {doctor.specialty}
                                 </option>
                             ))}
